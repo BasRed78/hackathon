@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Get set up — AI for Good Hackathon</title>
+<style>
+  :root{
+    --ink:#0f0f0e;
+    --ink-2:#171716;
+    --ink-3:#201f1d;
+    --paper:#fafbfd;
+    --vermilion:#fc5924;
+    --vermilion-soft:rgba(252,89,36,.14);
+    --sage:#63a393;
+    --sage-soft:rgba(99,163,147,.16);
+    --muted:#9a9892;
+    --line:#2b2a28;
+    --line-2:#383634;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1100px 520px at 82% -8%, rgba(252,89,36,.10), transparent 62%),
+      radial-gradient(900px 500px at 0% 108%, rgba(99,163,147,.08), transparent 60%),
+      var(--ink);
+    color:var(--paper);
+    font-family:"Inter","Helvetica Neue",Arial,system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:740px;margin:0 auto;padding:48px 24px 96px}
+
+  .eyebrow{
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--vermilion);font-weight:600;margin:0 0 16px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow:before{content:"";width:22px;height:2px;background:var(--vermilion);display:inline-block}
+  h1{
+    font-size:clamp(32px,5.2vw,48px);line-height:1.02;margin:0 0 16px;
+    font-weight:800;letter-spacing:-.025em;
+  }
+  h1 em{font-style:normal;color:var(--vermilion)}
+  .lede{font-size:18px;color:var(--muted);margin:0;max-width:52ch}
+  .timebox{
+    display:inline-flex;align-items:center;gap:9px;margin-top:22px;
+    font-family:ui-monospace,monospace;font-size:12.5px;color:var(--paper);
+    background:var(--ink-3);border:1px solid var(--line-2);
+    padding:7px 13px;border-radius:999px;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--vermilion);box-shadow:0 0 0 4px var(--vermilion-soft)}
+
+  .rule{height:1px;background:var(--line);border:0;margin:38px 0}
+
+  .q-kicker{
+    font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--vermilion);font-weight:600;margin:0 0 12px;
+  }
+  h2{font-size:25px;margin:0 0 8px;font-weight:700;letter-spacing:-.02em}
+  .q-sub{color:var(--muted);margin:0 0 24px;font-size:16px}
+
+  .choices{display:grid;gap:12px}
+  .choice{
+    text-align:left;cursor:pointer;width:100%;
+    background:var(--ink-3);border:1px solid var(--line-2);border-radius:var(--radius);
+    padding:18px 20px;font:inherit;color:var(--paper);
+    display:flex;align-items:center;gap:16px;
+    transition:border-color .15s ease, transform .12s ease, background .15s ease;
+  }
+  .choice:hover{border-color:var(--vermilion);transform:translateY(-1px);background:#26241f}
+  .choice:focus-visible{outline:3px solid var(--vermilion-soft);outline-offset:2px;border-color:var(--vermilion)}
+  .choice .lead{display:block;font-size:17px;font-weight:650;margin:0}
+  .choice .note{display:block;font-size:14px;color:var(--muted);margin:3px 0 0}
+  .choice .ic{
+    flex:0 0 auto;width:36px;height:36px;border-radius:10px;
+    background:var(--vermilion-soft);color:var(--vermilion);
+    display:grid;place-items:center;font-family:ui-monospace,monospace;font-weight:700;font-size:15px;
+  }
+
+  .panel{
+    background:var(--ink-3);border:1px solid var(--line-2);border-radius:var(--radius);
+    padding:28px;
+  }
+  .panel.success{border-color:rgba(99,163,147,.45);
+    background:linear-gradient(180deg, rgba(99,163,147,.10), var(--ink-3) 70%)}
+  .panel.setup{border-color:rgba(252,89,36,.4);
+    background:linear-gradient(180deg, rgba(252,89,36,.08), var(--ink-3) 70%)}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;font-family:ui-monospace,monospace;
+    font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+    padding:6px 12px;border-radius:999px;margin-bottom:16px;
+  }
+  .badge.ok{background:var(--sage-soft);color:var(--sage)}
+  .badge.set{background:var(--vermilion-soft);color:var(--vermilion)}
+  .panel h3{margin:0 0 10px;font-size:22px;font-weight:750;letter-spacing:-.01em}
+  .panel p{margin:0 0 12px;color:#d6d4cd}
+  .panel p:last-child{margin-bottom:0}
+  .panel strong{color:var(--paper)}
+
+  ol.steps{list-style:none;counter-reset:s;margin:24px 0 0;padding:0}
+  ol.steps>li{counter-increment:s;position:relative;padding:0 0 28px 54px;margin:0}
+  ol.steps>li:before{
+    content:counter(s);position:absolute;left:0;top:-2px;
+    width:36px;height:36px;border-radius:50%;
+    background:var(--vermilion);color:var(--ink);
+    font-family:ui-monospace,monospace;font-weight:700;font-size:15px;
+    display:grid;place-items:center;
+  }
+  ol.steps>li:not(:last-child):after{
+    content:"";position:absolute;left:17.5px;top:36px;bottom:6px;width:1px;background:var(--line-2);
+  }
+  ol.steps h4{margin:0 0 6px;font-size:17px;font-weight:700}
+  ol.steps p{margin:0 0 10px;color:#cfcdc6;font-size:15.5px}
+
+  code.inline{
+    font-family:ui-monospace,monospace;font-size:13px;
+    background:#000;color:var(--sage);padding:2px 6px;border-radius:5px;border:1px solid var(--line-2);
+  }
+  .term{
+    background:#000;color:#e8ece9;border-radius:10px;
+    padding:14px 16px;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:13.5px;line-height:1.7;overflow-x:auto;margin:0 0 8px;
+    border:1px solid var(--line-2);white-space:pre-wrap;
+  }
+  .term .c{display:block;color:var(--sage)}
+  .term .p{color:#5f6f69;user-select:none}
+  .copy{
+    font:inherit;font-family:ui-monospace,monospace;font-size:12px;
+    background:transparent;border:1px solid var(--line-2);border-radius:7px;
+    padding:5px 11px;cursor:pointer;color:var(--muted);
+  }
+  .copy:hover{border-color:var(--vermilion);color:var(--vermilion)}
+
+  .callout{
+    border-left:3px solid var(--vermilion);background:var(--vermilion-soft);
+    padding:12px 16px;border-radius:0 10px 10px 0;font-size:14.5px;color:#f3d8cb;margin:14px 0 0;
+  }
+  .callout strong{color:#ffd9c9}
+
+  .repo{
+    margin-top:18px;display:flex;gap:14px;align-items:flex-start;
+    background:var(--ink-2);border:1px dashed var(--line-2);border-radius:12px;padding:16px 18px;
+  }
+  .repo .ic{flex:0 0 auto;width:32px;height:32px;border-radius:9px;background:var(--sage);color:var(--ink);display:grid;place-items:center;font-size:16px;font-weight:700}
+  .repo h4{margin:0 0 3px;font-size:15.5px;font-weight:700}
+  .repo p{margin:0;font-size:14px;color:var(--muted)}
+
+  .back{
+    background:none;border:0;font:inherit;color:var(--muted);cursor:pointer;
+    font-family:ui-monospace,monospace;font-size:13px;padding:8px 0;margin-top:28px;
+  }
+  .back:hover{color:var(--vermilion)}
+
+  .foot{margin-top:42px;font-size:13.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:22px}
+  .foot a{color:var(--sage)}
+  .brandline{margin-top:8px;font-size:12px;color:#6b6964;font-family:ui-monospace,monospace;letter-spacing:.03em}
+  .ph{background:var(--vermilion-soft);border-radius:4px;padding:0 5px;color:#fca583;font-style:normal}
+
+  /* ---- GitHub explainer ----------------------------------------------- */
+  .gh{margin-top:32px;border-top:1px solid var(--line);padding-top:30px}
+  .gh-kicker{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--sage);font-weight:600;margin:0 0 10px}
+  .gh-title{font-size:22px;font-weight:750;letter-spacing:-.01em;margin:0 0 10px}
+  .gh-intro{color:var(--muted);font-size:15.5px;margin:0 0 22px;max-width:60ch}
+  .gh-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .gh-card{
+    background:var(--ink-3);border:1px solid var(--line-2);border-radius:12px;padding:18px 18px 16px;position:relative;
+  }
+  .gh-n{
+    display:inline-grid;place-items:center;width:26px;height:26px;border-radius:7px;
+    background:var(--sage-soft);color:var(--sage);
+    font-family:ui-monospace,monospace;font-weight:700;font-size:13px;margin-bottom:10px;
+  }
+  .gh-card h4{margin:0 0 5px;font-size:15.5px;font-weight:700}
+  .gh-card p{margin:0;font-size:14px;color:#bdbbb4;line-height:1.5}
+  .gh-ask{
+    margin-top:16px;display:flex;gap:14px;align-items:flex-start;
+    background:linear-gradient(180deg, var(--sage-soft), var(--ink-3) 80%);
+    border:1px solid rgba(99,163,147,.35);border-radius:12px;padding:18px;
+  }
+  .gh-ask .ic{flex:0 0 auto;width:34px;height:34px;border-radius:9px;background:var(--sage);color:var(--ink);display:grid;place-items:center;font-size:17px;font-weight:700}
+  .gh-ask h4{margin:0 0 4px;font-size:16px;font-weight:700}
+  .gh-ask p{margin:0;font-size:14.5px;color:#cfcdc6}
+  .gh-ask strong{color:var(--paper)}
+  @media (max-width:560px){ .gh-grid{grid-template-columns:1fr} }
+
+  /* ---- Email capture -------------------------------------------------- */
+  .cap{margin-top:30px;border-top:1px solid var(--line);padding-top:30px}
+  .cap-intro{color:var(--muted);font-size:15.5px;margin:0 0 20px;max-width:60ch}
+  .cap-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+  .cap-l{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600;color:var(--paper);
+    font-family:ui-monospace,monospace;letter-spacing:.02em}
+  .cap-i{
+    background:#000;border:1px solid var(--line-2);border-radius:10px;color:var(--paper);
+    font:inherit;font-size:15px;padding:11px 13px;transition:border-color .15s ease;
+  }
+  .cap-i::placeholder{color:#5f5e5a}
+  .cap-i:focus{outline:none;border-color:var(--vermilion)}
+  .cap-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .cap-send{
+    background:var(--vermilion);color:var(--ink);border:0;border-radius:10px;
+    font:inherit;font-weight:700;font-size:15px;padding:12px 20px;cursor:pointer;
+    transition:transform .12s ease, filter .15s ease;
+  }
+  .cap-send:hover{transform:translateY(-1px);filter:brightness(1.05)}
+  .cap-send:focus-visible{outline:3px solid var(--vermilion-soft);outline-offset:2px}
+  .cap-copy{
+    background:none;border:0;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;
+    text-decoration:underline;text-underline-offset:3px;padding:6px 0;
+  }
+  .cap-copy:hover{color:var(--sage)}
+  .cap-status{font-size:14px;margin:14px 0 0;min-height:1.2em;font-family:ui-monospace,monospace}
+  @media (max-width:560px){ .cap-fields{grid-template-columns:1fr} }
+
+  @media (max-width:560px){
+    .wrap{padding:32px 18px 72px}
+    .choice,.panel{padding:16px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">AI for Good Hackathon · Edition 1</p>
+    <h1>Let's get your<br/>tools <em>ready</em>.</h1>
+    <p class="lede">Two quick questions and we'll point you to exactly what you need before the weekend — nothing more. Most people finish this page in under a minute.</p>
+    <span class="timebox"><span class="dot"></span>19–21 June 2026 · EDGE, Amsterdam</span>
+  </header>
+
+  <hr class="rule" />
+
+  <main id="app" aria-live="polite"></main>
+
+  <div class="foot">
+    Stuck or unsure? Email the organising team at
+    <a href="mailto:davinia@techleap.nl"><span class="ph">davinia@techleap.nl</span></a>
+    and we'll sort it with you before the weekend.
+    <div class="brandline">Presented by The AI Hub NL · part of Amsterdam Tech Week</div>
+  </div>
+</div>
+
+<script>
+const app = document.getElementById('app');
+const ORG = {
+  consoleOrg: '[CONSOLE_ORG_NAME]',
+  githubOrg:  '[GITHUB_ORG_NAME]',
+  email:      'davinia@techleap.nl'
+};
+function render(html){ app.innerHTML = html; app.scrollIntoView({behavior:'smooth', block:'nearest'}); bind(); }
+
+function q1(){
+  render(`
+    <p class="q-kicker">Question 1 of 2</p>
+    <h2>Will you be writing code during the hackathon?</h2>
+    <p class="q-sub">Plenty of valuable roles don't involve code — design, research, facilitation, talking with Yasmin's family. Be honest about your weekend.</p>
+    <div class="choices">
+      <button class="choice" data-go="q2">
+        <span class="ic">&lt;/&gt;</span>
+        <span><span class="lead">Yes, I'll be coding</span><span class="note">I expect to build or prototype something hands-on.</span></span>
+      </button>
+      <button class="choice" data-go="noncoder">
+        <span class="ic">◇</span>
+        <span><span class="lead">No, I'm in a non-coding role</span><span class="note">Design, research, strategy, facilitation, or similar.</span></span>
+      </button>
+    </div>
+  `);
+}
+
+function q2(){
+  render(`
+    <p class="q-kicker">Question 2 of 2</p>
+    <h2>Do you already have an AI coding tool you'll use?</h2>
+    <p class="q-sub">If you've got your own setup — Claude Code, Cursor, Copilot, whatever — keep using it. We only step in if you'd otherwise arrive empty-handed.</p>
+    <div class="choices">
+      <button class="choice" data-go="own">
+        <span class="ic">✓</span>
+        <span><span class="lead">Yes, I'll bring my own</span><span class="note">My own account and subscription, on my own laptop.</span></span>
+      </button>
+      <button class="choice" data-go="setup">
+        <span class="ic">+</span>
+        <span><span class="lead">No, set me up with yours</span><span class="note">I'd like the supported fallback so I'm ready to build.</span></span>
+      </button>
+    </div>
+    <button class="back" data-go="q1">← back</button>
+  `);
+}
+
+function noncoder(){
+  render(`
+    <div class="panel success">
+      <span class="badge ok">● You're all set</span>
+      <h3>Nothing to install — just bring yourself.</h3>
+      <p>Your contribution doesn't run through a terminal, so there's no tooling to set up ahead of time. Come ready to think, sketch, listen, and shape the work with your team.</p>
+      <p>If your plans change and you end up wanting to build something, come back to this page or grab one of us on the day — setup takes five minutes.</p>
+      <div class="repo">
+        <span class="ic">⎇</span>
+        <div>
+          <h4>Where the code lives</h4>
+          <p>Your team's work is kept in a private GitHub repo we set up at the event. You don't need a GitHub account for a non-coding role, but it's handy if you'd like to follow along.</p>
+        </div>
+      </div>
+    </div>
+    <button class="back" data-go="q1">← start over</button>
+  `);
+}
+
+function own(){
+  render(`
+    <div class="panel success">
+      <span class="badge ok">● You're all set</span>
+      <h3>Bring what you know.</h3>
+      <p>Use your own tools and account on your own laptop — that's the fastest path for you, and exactly what we'd recommend.</p>
+      <p>A note on cost, so there are no surprises: anything you run on <em>your own</em> account — Claude Pro, a personal Claude Code subscription, Cursor, Copilot — stays on your own account, including any overage if you run past your plan's allowance. We can't see or top up personal accounts, so we don't cover that spend.</p>
+      <p>If you'd rather not put your own allowance at risk, use our setup instead: signing in to <em>our</em> Claude Code organisation puts usage on our account, with no bill to you. <a href="#" data-go="setup" style="color:var(--vermilion);font-weight:600">Set me up with yours →</a></p>
+    </div>
+    ${githubBlock()}
+    ${captureBlock('Bringing own tools')}
+    <button class="back" data-go="q2">← back</button>
+  `);
+}
+
+function setup(){
+  render(`
+    <div class="panel setup">
+      <span class="badge set">▲ Five-minute setup</span>
+      <h3>Claude Code — our supported fallback</h3>
+      <p>Claude Code is a coding agent that runs in your terminal. When you sign in with the account from our invite, your usage runs on <em>our</em> organisation's account — so there's no key to manage and no cost to you. It's not a reimbursement; the spend simply never lands on you. Do this <strong>before</strong> the event so the weekend is all building.</p>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <h4>Accept your two invites (we send these by email)</h4>
+        <p>Ahead of the event you'll get an invite to our Anthropic Console organisation, <code class="inline">${ORG.consoleOrg}</code>, and to our GitHub organisation, <code class="inline">${ORG.githubOrg}</code>. Accept both. Signing in to Claude Code with <em>this</em> account is what puts your usage on our tab.</p>
+        <div class="callout"><strong>Important:</strong> use the Console account from our invite when you sign in below. A personal Claude account won't be covered by us.</div>
+      </li>
+      <li>
+        <h4>Check you have Node.js 18 or newer</h4>
+        <p>Open your terminal and run this. If you see <code class="inline">v18</code> or higher, you're good. If not, install the LTS version from <a href="https://nodejs.org" target="_blank" rel="noopener" style="color:var(--sage)">nodejs.org</a> first.</p>
+        <div class="term"><span class="p">$ </span>node --version</div>
+        <button class="copy" data-copy="node --version">Copy</button>
+      </li>
+      <li>
+        <h4>Install Claude Code</h4>
+        <p>Pick one. The first works on macOS and Linux; on Windows, or if you prefer npm, use the second.</p>
+        <div class="term"><span class="c"># macOS / Linux — official installer</span><span class="p">$ </span>curl -fsSL https://claude.ai/install.sh | sh</div>
+        <button class="copy" data-copy="curl -fsSL https://claude.ai/install.sh | sh">Copy</button>
+        <div class="term" style="margin-top:10px"><span class="c"># Any OS — via npm (needs Node 18+)</span><span class="p">$ </span>npm install -g @anthropic-ai/claude-code</div>
+        <button class="copy" data-copy="npm install -g @anthropic-ai/claude-code">Copy</button>
+        <div class="callout">Don't put <code class="inline">sudo</code> in front of the npm command — it causes permission problems later.</div>
+      </li>
+      <li>
+        <h4>Start it and sign in</h4>
+        <p>Move into any project folder and run <code class="inline">claude</code>. Your browser opens for a one-time sign-in — use the account from our invite. Back in the terminal, you're authenticated. If it doesn't prompt you, type <code class="inline">/login</code>.</p>
+        <div class="term"><span class="p">$ </span>claude</div>
+        <button class="copy" data-copy="claude">Copy</button>
+      </li>
+      <li>
+        <h4>Confirm it's working</h4>
+        <p>Run the built-in check. Green checkmarks mean you're ready to build on the day — nothing more to do.</p>
+        <div class="term"><span class="p">$ </span>claude doctor</div>
+        <button class="copy" data-copy="claude doctor">Copy</button>
+      </li>
+      <li>
+        <h4>Your team repo comes at kickoff — nothing to do now</h4>
+        <p>You don't need to set up anything on GitHub before the event. We explain exactly how it works just below — give it a read so you know what to expect on the day.</p>
+      </li>
+    </ol>
+
+    ${githubBlock()}
+    ${captureBlock('Using our Claude Code fallback')}
+
+    <button class="back" data-go="q2">← back</button>
+  `);
+}
+
+/* ---- Shared GitHub explainer (both coder paths land on this) --------- */
+function githubBlock(){
+  return `
+    <div class="gh">
+      <p class="gh-kicker">Where your team's work lives</p>
+      <h3 class="gh-title">How GitHub works at the event</h3>
+      <p class="gh-intro">Each team works in one public repository, published openly under the AGPL-3.0 open-source licence. You keep ownership of what you build — it's licensed open, not signed over — so the work stays permanently free for the Challenge Beneficiary and anyone who wants to build on it. You don't need to do anything on GitHub before you arrive.</p>
+
+      <div class="gh-grid">
+        <div class="gh-card">
+          <span class="gh-n">1</span>
+          <h4>You get repo access at onboarding</h4>
+          <p>The repos are already created. When you arrive on Friday, we add you to your team's repo — you don't need access before then.</p>
+        </div>
+        <div class="gh-card">
+          <span class="gh-n">2</span>
+          <h4>One public repo per team</h4>
+          <p>Everything your team builds lives there, published under AGPL-3.0 with the licence file included before the event ends.</p>
+        </div>
+        <div class="gh-card">
+          <span class="gh-n">3</span>
+          <h4>Keep it simple — push to main</h4>
+          <p>No branch ceremony for a 48-hour build. Commit and push straight to <code class="inline">main</code>. Pull before you push so you don't clash with a teammate.</p>
+        </div>
+        <div class="gh-card">
+          <span class="gh-n">4</span>
+          <h4>The one hard rule</h4>
+          <p>Nothing about Yasmin goes in the repo. Her personal or medical data is confidential, never open-sourced — keep it out of the codebase entirely.</p>
+        </div>
+      </div>
+
+      <div class="gh-card" style="margin-top:12px">
+        <span class="gh-n">5</span>
+        <h4>Check your open-source components</h4>
+        <p>Use only third-party and open-source components whose licences are compatible with AGPL-3.0, and list them with their licences in the repo README. Anything that would block open publication can't be used.</p>
+      </div>
+
+      <div class="gh-ask">
+        <span class="ic">⎇</span>
+        <div>
+          <h4>The only thing to bring</h4>
+          <p>A GitHub account, ready to go. <strong>Send us your GitHub username ahead of time</strong> using the button below, so we can add you to your team's repo the moment you arrive — no waiting around at kickoff.</p>
+        </div>
+      </div>
+    </div>`;
+}
+
+const screens = { q1, q2, noncoder, own, setup };
+
+/* ---- Email capture (mailto + copy fallback) -------------------------- */
+function captureBlock(pathLabel){
+  return `
+    <div class="cap">
+      <p class="gh-kicker">One quick step</p>
+      <h3 class="gh-title">Send us your details</h3>
+      <p class="cap-intro">So we can add you to your team's repo and have everything ready when you arrive, send us your name and GitHub username. Fill these in, then hit send — it opens a pre-filled email to the organising team.</p>
+
+      <div class="cap-fields">
+        <label class="cap-l">Your name
+          <input type="text" id="cap-name" class="cap-i" placeholder="Jane de Vries" autocomplete="name" />
+        </label>
+        <label class="cap-l">GitHub username
+          <input type="text" id="cap-gh" class="cap-i" placeholder="janedevries" autocomplete="off" />
+        </label>
+      </div>
+
+      <input type="hidden" id="cap-path" value="${pathLabel}" />
+      <div class="cap-actions">
+        <button class="cap-send" id="cap-send"><i></i>Open pre-filled email</button>
+        <button class="cap-copy" id="cap-copy">Can't send? Copy the details instead</button>
+      </div>
+      <p class="cap-status" id="cap-status" aria-live="polite"></p>
+    </div>`;
+}
+
+function bind(){
+  app.querySelectorAll('[data-go]').forEach(b=> b.addEventListener('click', (e)=> { e.preventDefault(); screens[b.dataset.go](); }));
+  app.querySelectorAll('[data-copy]').forEach(b=>{
+    b.addEventListener('click', async ()=>{
+      try{ await navigator.clipboard.writeText(b.dataset.copy);
+        const t=b.textContent; b.textContent='Copied ✓'; setTimeout(()=>b.textContent=t,1400);
+      }catch(e){}
+    });
+  });
+
+  const send = document.getElementById('cap-send');
+  if(send){
+    const status = document.getElementById('cap-status');
+    const buildMessage = ()=>{
+      const name = (document.getElementById('cap-name').value || '').trim();
+      const gh   = (document.getElementById('cap-gh').value || '').trim();
+      const path = (document.getElementById('cap-path').value || '').trim();
+      return { name, gh, path };
+    };
+    const validate = (m)=>{
+      if(!m.name || !m.gh){
+        status.textContent = 'Please add both your name and GitHub username first.';
+        status.style.color = 'var(--vermilion)';
+        return false;
+      }
+      return true;
+    };
+    const bodyText = (m)=>(
+      'Hi team,\n\n'+
+      'Here are my hackathon setup details:\n\n'+
+      'Name: '+m.name+'\n'+
+      'GitHub username: '+m.gh+'\n'+
+      'Tooling: '+m.path+'\n\n'+
+      'Thanks!'
+    );
+    send.addEventListener('click', ()=>{
+      const m = buildMessage();
+      if(!validate(m)) return;
+      const subject = 'Hackathon setup — '+m.name;
+      const url = 'mailto:'+encodeURIComponent(ORG.email)+
+        '?subject='+encodeURIComponent(subject)+
+        '&body='+encodeURIComponent(bodyText(m));
+      window.location.href = url;
+      status.textContent = 'Opening your email app… if nothing happens, use the copy option below.';
+      status.style.color = 'var(--sage)';
+    });
+    document.getElementById('cap-copy').addEventListener('click', async ()=>{
+      const m = buildMessage();
+      if(!validate(m)) return;
+      const text = 'To: '+ORG.email+'\nSubject: Hackathon setup — '+m.name+'\n\n'+bodyText(m);
+      try{
+        await navigator.clipboard.writeText(text);
+        status.textContent = 'Copied. Paste it into an email to '+ORG.email+' and send.';
+        status.style.color = 'var(--sage)';
+      }catch(e){
+        status.textContent = 'Copy failed — please email '+ORG.email+' with your name, GitHub username, and tooling choice.';
+        status.style.color = 'var(--vermilion)';
+      }
+    });
+  }
+}
+q1();
+</script>
+</body>
+</html>
