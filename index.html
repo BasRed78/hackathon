@@ -249,8 +249,8 @@
 <script>
 const app = document.getElementById('app');
 const ORG = {
-  consoleOrg: '[CONSOLE_ORG_NAME]',
-  githubOrg:  '[GITHUB_ORG_NAME]',
+  consoleOrg: 'our Anthropic Console organisation',
+  githubOrg:  'our GitHub organisation',
   email:      'davinia@techleap.nl'
 };
 function render(html){ app.innerHTML = html; app.scrollIntoView({behavior:'smooth', block:'nearest'}); bind(); }
@@ -303,7 +303,7 @@ function noncoder(){
         <span class="ic">⎇</span>
         <div>
           <h4>Where the code lives</h4>
-          <p>Your team's work is kept in a private GitHub repo we set up at the event. You don't need a GitHub account for a non-coding role, but it's handy if you'd like to follow along.</p>
+          <p>Your team's work is kept in a public GitHub repo, published open-source under AGPL-3.0. You don't need a GitHub account for a non-coding role, but it's handy if you'd like to follow along.</p>
         </div>
       </div>
     </div>
@@ -331,14 +331,15 @@ function setup(){
     <div class="panel setup">
       <span class="badge set">▲ Five-minute setup</span>
       <h3>Claude Code — our supported fallback</h3>
-      <p>Claude Code is a coding agent that runs in your terminal. When you sign in with the account from our invite, your usage runs on <em>our</em> organisation's account — so there's no key to manage and no cost to you. It's not a reimbursement; the spend simply never lands on you. Do this <strong>before</strong> the event so the weekend is all building.</p>
+      <p>Claude Code is a coding agent that runs in your terminal. When you sign in with the account from our invite, your usage runs on <em>our</em> organisation's account — so there's no key to manage and no cost to you. It's not a reimbursement; the spend simply never lands on you.</p>
+      <p style="margin-bottom:0"><strong>Timing:</strong> you can install Claude Code now (steps 2–3). Signing in needs the invite we send out on Friday — so the last steps may have to wait until then, or we'll finish them with you at kickoff.</p>
     </div>
 
     <ol class="steps">
       <li>
         <h4>Accept your two invites (we send these by email)</h4>
-        <p>Ahead of the event you'll get an invite to our Anthropic Console organisation, <code class="inline">${ORG.consoleOrg}</code>, and to our GitHub organisation, <code class="inline">${ORG.githubOrg}</code>. Accept both. Signing in to Claude Code with <em>this</em> account is what puts your usage on our tab.</p>
-        <div class="callout"><strong>Important:</strong> use the Console account from our invite when you sign in below. A personal Claude account won't be covered by us.</div>
+        <p>Ahead of the event you'll get an invite to our Anthropic Console organisation and to our GitHub organisation. Accept both. Signing in to Claude Code with <em>this</em> account is what puts your usage on our tab.</p>
+        <div class="callout"><strong>Important:</strong> when you sign in, use the Console account from the invite we send you — not a personal Claude account, which won't be covered by us. If your invite hasn't arrived yet, you can still install now (steps 2–3) and sign in once it does.</div>
       </li>
       <li>
         <h4>Check you have Node.js 18 or newer</h4>
@@ -392,7 +393,7 @@ function githubBlock(){
         <div class="gh-card">
           <span class="gh-n">1</span>
           <h4>You get repo access at onboarding</h4>
-          <p>The repos are already created. When you arrive on Friday, we add you to your team's repo — you don't need access before then.</p>
+          <p>Your team's repo will be ready when you arrive on Friday — we add you to it at onboarding. You don't need access before then.</p>
         </div>
         <div class="gh-card">
           <span class="gh-n">2</span>
