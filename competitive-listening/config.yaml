@@ -1,0 +1,35 @@
+# Competitive listening config for Live Legends.
+company: Live Legends
+company_site: livelegends.com
+company_profile: >
+  Live experience design studio in Abcoude (Amsterdam area), part of 360 Experience Group.
+  Concept, stage/set design, content, show and music production, video, lighting and
+  show control for festivals, clubs, concerts, TV, eSports, congresses and corporate events.
+category: live experience / show and stage design studio
+market: Netherlands (plus international festival and brand work)
+
+# Sister companies inside 360 Experience Group. Never treat these as competitors.
+exclude:
+  - Vision Impossible
+  - 360 Experience Group
+
+# Sample run: first 3 only. Add the rest after the sample is approved.
+competitors: []
+#  - name: Example Studio
+#    site: example.com
+#    linkedin: https://www.linkedin.com/company/example
+
+limits:
+  max_calls_without_confirmation: 100
+  searches_per_source_per_competitor: 1
+  lookback_days: 7
+
+# Which sources this environment can cover. Flip to true when the blocker is removed.
+sources:
+  linkedin_posts:   {enabled: true,  method: web search (site:linkedin.com)}
+  news_press:       {enabled: true,  method: web search}
+  funding_filings:  {enabled: true,  method: web search (KvK, news)}
+  site_and_tech:    {enabled: true,  method: web search for new projects/pages only; no page diffing}
+  ads_meta_linkedin_google: {enabled: false, blocker: network policy blocks ad libraries}
+  ai_answers_chatgpt_gemini: {enabled: false, blocker: no OPENAI_API_KEY / GEMINI_API_KEY}
+  ai_answers_claude_proxy:   {enabled: true,  method: Claude answers the 8 buyer questions; labelled as Claude, not ChatGPT/Gemini}
